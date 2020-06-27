@@ -10,6 +10,7 @@ import (
 
 var (
 	address = ":2654"
+	db      map[string][]byte
 )
 
 func main() {
@@ -17,12 +18,9 @@ func main() {
 
 	var mu sync.RWMutex
 
-	db := make(map[string][]byte)
-
 	err := redcon.ListenAndServe(
 		address,
 		func(conn redcon.Conn, cmd redcon.Command) {
-
 			command := strings.ToLower(string(cmd.Args[0]))
 
 			switch command {
